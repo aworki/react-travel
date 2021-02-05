@@ -1,10 +1,10 @@
 import React from 'react'
 import style from "./SideMenu.module.css";
-import { sideMenuList, productList1 } from './mockup'
+import { sideMenuList } from './mockup'
 import { Menu } from 'antd'
 import { GifOutlined } from "@ant-design/icons"
 
-export default function SideMenu() {
+export  const  SideMenu= ()=> {
   return (
     <Menu mode="vertical" className={style["side-menu"]}>
       {

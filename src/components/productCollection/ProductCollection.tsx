@@ -10,7 +10,7 @@ interface Iproduct {
   products: any[]
 }
 
-const ProductCollection: FC<Iproduct> = (props) => {
+export const ProductCollection: FC<Iproduct> = (props) => {
   const { title, sideImage, products } = props;
 
   return (
@@ -79,4 +79,4 @@ const ProductCollection: FC<Iproduct> = (props) => {
   )
 }
 
-export default ProductCollection;
+// export default ProductCollection;

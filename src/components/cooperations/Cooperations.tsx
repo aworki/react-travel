@@ -6,7 +6,7 @@ import pic3 from "../../assets/images/icon-720944_640.png";
 import pic4 from "../../assets/images/microsoft-80658_640.png";
 import style from './Cooperations.module.css'
 
-const Cooperations: FC = () => {
+export const Cooperations: FC = () => {
   return (
     <div className={style.content}>
       <Divider orientation="left">
@@ -52,4 +52,4 @@ const Cooperations: FC = () => {
   )
 }
 
-export default Cooperations
+// export default Cooperations
