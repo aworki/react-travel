@@ -278,12 +278,64 @@ constructor(props: RouteComponentProps<{}, StaticContext, unknown> | Readonly<Ro
 
 主要使用store.getState()和store.subscribe()
 
-### 为什么要专门给redux的action里一个变量
+### redux项目级架构
 
-为了防止，打错，在这里打错
+为了方便观看和调试，所以引入redux的架构
+
+1、每个模块拥有一个文件夹
+
+![image-20210206104104152](C:\Users\dc\AppData\Roaming\Typora\typora-user-images\image-20210206104104152.png)
+
+2、在language文件夹中创建languageActions.ts
 
 ``` react
-export default (state = defaultState, action:any) => {
+//创建action变量，并export出去，用来统一化action，防止打错这种低级错误
+export const CHANGE_LANGUAGE = "change_language";
+export const ADD_LANGUAGE = "add_language";
+```
+
+``` typescript
+//创建action工厂函数，用来创建action，return一个action
+//防止创建action的时候创建错误
+export const changeLanguageActionCreator = (
+  languageCode: "zh" | "en"
+): ChangeLanguageAction => {
+  return {
+    type: CHANGE_LANGUAGE,
+    payload: languageCode,
+  };
+};
+export const addLanguageActionCreator = (
+  name: string,
+  code: string
+): AddLanguageAction => {
+  return {
+    type: ADD_LANGUAGE,
+    payload: { name, code },
+  };
+};
+```
+
+``` typescript
+//通过定义actionCreator的返回值的接口，防止我们工厂函数编写错误
+//还可以编写一个联合类型作为reducer的action注释
+interface ChangeLanguageAction {
+  type: typeof CHANGE_LANGUAGE;
+  payload: "zh" | "en";
+}
+
+interface AddLanguageAction {
+  type: typeof ADD_LANGUAGE;
+  payload: { name: string; code: string };
+}
+
+export type LanguageActionTypes = ChangeLanguageAction | AddLanguageAction;
+
+```
+
+```  typescript
+//这个是reduer函数，action的注释之前一直赋成any，这里可以赋成上面创建的联合类型LanguageActionTypes
+export default (state = defaultState, action:LanguageActionTypes) => {
   console.log(state, action)
   switch(action.type){
     case CHANGE_LANGUAGE:
@@ -301,28 +353,7 @@ export default (state = defaultState, action:any) => {
 };
 ```
 
-除了创建action变量外，也要创建action的创建函数
 
-``` react
-export const changeLanguageActionCreator = (
-  languageCode: "zh" | "en"
-): ChangeLanguageAction => {
-  return {
-    type: CHANGE_LANGUAGE,
-    payload: languageCode,
-  };
-};
-
-export const addLanguageActionCreator = (
-  name: string,
-  code: string
-): AddLanguageAction => {
-  return {
-    type: ADD_LANGUAGE,
-    payload: { name, code },
-  };
-};
-```
 
 
 
